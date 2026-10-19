@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07060a;
+  --color-panel: #141218;
+  --color-ink: #f6f1f4;
+  --color-muted: #a89aa3;
+  --color-faint: #6d6268;
+  --color-line: #2a2429;
+  --color-rose: #f26d9b;
+  --color-blush: #ffc1d4;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-rose);
+    color: var(--color-bg);
+  }
+}
+
+.atmosphere {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+}
+
+.glow-a {
+  top: -12%;
+  left: -10%;
+  width: 28rem;
+  height: 28rem;
+  background: color-mix(in oklab, var(--color-rose) 38%, transparent);
+  animation: drift 18s ease-in-out infinite;
+}
+
+.glow-b {
+  right: -8%;
+  bottom: -10%;
+  width: 22rem;
+  height: 22rem;
+  background: color-mix(in oklab, var(--color-blush) 18%, transparent);
+  animation: drift 22s ease-in-out infinite reverse;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(var(--color-ink) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+
+.stage-in {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage-out {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(4px);
+  pointer-events: none;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    filter 0.28s ease;
+}
+
+.heart-pulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.catch-item {
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.rose-btn {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-rose) 70%, transparent);
+  background: color-mix(in oklab, var(--color-rose) 18%, transparent);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-blush);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.rose-btn:hover {
+  transform: translateY(-2px);
+  background: color-mix(in oklab, var(--color-rose) 32%, transparent);
+  color: var(--color-ink);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(24px, 16px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.16);
+  }
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-12%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(340px);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-10deg) scale(1.04);
+  }
+  70% {
+    transform: rotate(10deg) scale(1.04);
+  }
+}
+
+.egg-shake {
+  animation: shake 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
